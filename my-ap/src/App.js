@@ -1,14 +1,20 @@
 import './App.css';
 
+/**
+ * Imports all the components necessary.
+ */
 import {Home} from './Components/Home';
 import {Department} from './Components/Department';
 import {Employee} from './Components/Employee';
 import {Navigation} from './Components/Navigation';
-import StickyHeader from './Components/StickyHeader';
+import {StickyHeader} from './Components/StickyHeader';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-//Put Sticky Header here so it will be used on all webpages.
+/**
+ * Used to create the application.
+ * @returns the appilcation.
+ */
 function App()
 {
   return (

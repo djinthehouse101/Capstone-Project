@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Department.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Department.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {Component} from 'react';
+import {Table} from 'react-bootstrap';
+
+
+import {Button,ButtonToolbar} from 'react-bootstrap';
+import { AddDepartment } from './AddDepartment';
+import { EditDepartment } from './EditDepartment';
+
+/**
+ * This class is used to handle the creation of the Department page
+ */
+export class Department extends Component
+{
+    /**
+     * Used to construct the Department class.
+     * @param {*} props holds the database data.
+     */
+    constructor(props){
+        super(props);
+        this.state={deps:[], addModalShow:false, editModalShow:false}
+    }
+    /**
+    * This method is used to refresh the datbase and give it new information
+    */
+    refreshList(){
+        fetch(process.env.REACT_APP_API+'department')
+        .then(response=>response.json())
+        .then(data=>{
+            this.setState({deps:data});
+        });
+    }
+
+    /**
+     * Used to mount the data from refresh list.
+     */
+    componentDidMount(){
+        this.refreshList();
+    }
+
+    /**
+     * Used to update the modal if the conent is updated.
+     */
+    componentDidUpdate(){
+        this.refreshList();
+    }
+
+    /**
+     * Used to delete a department from the database.
+     * @param {int} depid holds the department id.
+     */
+    deleteDep(depid)
+    {
+        if(window.confirm('Are you sure?'))
+        {
+            fetch(process.env.REACT_APP_API+'department/'+depid,
+            {
+                method:'DELETE',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                }
+            })
+    
+        }
+    }
+    /**
+     * Used to create the Department webpage.
+     * @returns the rendered department modal.
+     */
+    render()
+    {
+        const {deps, depid, depname}=this.state;
+        let addModalClose=()=>this.setState({addModalShow:false});
+        let editModalClose=()=>this.setState({editModalShow:false});
+        return(
+            &lt;div>
+                &lt;Table className="mt-4" striped bordered hover size="sm">
+                    &lt;thead>
+                        &lt;tr>
+                            &lt;th>Department Id&lt;/th>
+                            &lt;th>Department Name&lt;/th>
+                            &lt;th>Options&lt;/th>
+                        &lt;/tr>
+                    &lt;/thead>
+                    &lt;tbody>
+                        {deps.map(dep=>
+                            &lt;tr key={dep.DepartmentId}>
+                                &lt;td>{dep.DepartmentId}&lt;/td>
+                                &lt;td>{dep.DepartmentName}&lt;/td>
+                                &lt;td>
+                                    &lt;ButtonToolbar>
+                                        &lt;Button className="mr-2" variant="info"
+                                            onClick={()=>this.setState({editModalShow:true,
+                                            depid:dep.DepartmentId,depname:dep.DepartmentName})}>
+                                                Edit
+                                        &lt;/Button>
+
+                                        &lt;Button className="mr-2" variant="danger"
+                                            onClick={()=>this.deleteDep(dep.DepartmentId)}>
+                                                Delete
+                                        &lt;/Button>
+
+                                        &lt;EditDepartment show ={this.state.editModalShow}
+                                        onHide={editModalClose}
+                                        depid={depid}
+                                        depname={depname}/>
+                                    &lt;/ButtonToolbar>
+                                &lt;/td>
+                            &lt;/tr>)}
+                    &lt;/tbody>
+                &lt;/Table>
+
+                &lt;ButtonToolbar>
+                    &lt;Button variant='primary'
+                    onClick={()=>this.setState({addModalShow:true})}>
+                        Add Department
+                    &lt;/Button>
+                    &lt;AddDepartment show={this.state.addModalShow}
+                    onHide={addModalClose}/>
+                &lt;/ButtonToolbar>
+            &lt;/div>
+        )
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddDepartment.html">AddDepartment</a></li><li><a href="AddEmployee.html">AddEmployee</a></li><li><a href="Department.html">Department</a></li><li><a href="StickyHeader.html">StickyHeader</a></li></ul><h3>Global</h3><ul><li><a href="global.html#min">min</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Thu Dec 16 2021 00:52:52 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

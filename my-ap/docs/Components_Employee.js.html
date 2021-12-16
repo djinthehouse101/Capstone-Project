@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Components/Employee.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Components/Employee.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {Component} from 'react';
+import {Table} from 'react-bootstrap';
+
+import {Button,ButtonToolbar} from 'react-bootstrap';
+import { AddEmployee } from './AddEmployee';
+import { EditEmployee } from './EditEmployee';
+
+/**
+ * This class is used to handle the creation of the Employee page
+ */
+export class Employee extends Component
+{
+    /**
+     * Used to construct the Employee class.
+     * @param {*} props holds the database data.
+     */
+    constructor(props)
+    {
+        super(props);
+        this.state={emps:[], addModalShow:false, editModalShow:false}
+    }
+
+    /**
+    * This method is used to refresh the datbase and give it new data.
+    */
+    refreshList(){
+        fetch(process.env.REACT_APP_API+'employee').then(response=>response.json()).then(data=>{this.setState({emps:data});});
+    }
+
+    /**
+     * Used to mount the data from refresh list.
+     */
+    componentDidMount(){
+        this.refreshList();
+    }
+
+    /**
+     * Used to update the modal if the conent is updated.
+     */
+    componentDidUpdate(){
+        this.refreshList();
+    }
+
+    /**
+     * Used to delete an employee from the database.
+     * @param {int} empid holds the employee id.
+     */
+    deleteEmp(empid){
+        if(window.confirm('Are you sure?')){
+            fetch(process.env.REACT_APP_API+'employee/'+empid,
+            {
+                method:'DELETE',
+                headers:
+                {
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                }
+            })
+    
+        }
+    }
+
+    /**
+     * Used to create the Employee webpage.
+     * @returns the rendered employee modal.
+     */
+    render()
+    {
+        const {emps, empid, empname, depmt, photofilename, doj}=this.state;
+        let addModalClose=()=>this.setState({addModalShow:false});
+        let editModalClose=()=>this.setState({editModalShow:false});
+        return(
+            &lt;div>
+                &lt;Table className="mt-4" striped bordered hover size="sm">
+                    &lt;thead>
+                        &lt;tr>
+                            &lt;th>Employee Id&lt;/th>
+                            &lt;th>Employee Name&lt;/th>
+                            &lt;th>Department&lt;/th>
+                            &lt;th>Date of Joining&lt;/th>
+                            &lt;th>Options&lt;/th>
+                        &lt;/tr>
+                    &lt;/thead>
+                    &lt;tbody>
+                        {emps.map(emp=>
+                            &lt;tr key={emp.EmployeeId}>
+                                &lt;td>{emp.EmployeeId}&lt;/td>
+                                &lt;td>{emp.EmployeeName}&lt;/td>
+                                &lt;td>{emp.Department}&lt;/td>
+                                &lt;td>{emp.DateOfJoining}&lt;/td>
+                                &lt;td>
+                                    &lt;ButtonToolbar>
+                                        &lt;Button className="mr-2" variant="info"
+                                            onClick={()=>this.setState({editModalShow:true,
+                                            empid:emp.EmployeeId,empname:emp.EmployeeName, depmt:emp.Department,
+                                            photofilename:emp.PhotoFileName, doj:emp.DateOfJoining})}>
+                                                Edit
+                                        &lt;/Button>
+
+                                        &lt;Button className="mr-2" variant="danger"
+                                            onClick={()=>this.deleteEmp(emp.EmployeeId)}>
+                                                Delete
+                                        &lt;/Button>
+
+                                        &lt;EditEmployee show ={this.state.editModalShow}
+                                        onHide={editModalClose}
+                                        empid={empid}
+                                        empname={empname}
+                                        depmt={depmt}
+                                        photofilename={photofilename}
+                                        doj={doj}/>
+                                    &lt;/ButtonToolbar>
+                                &lt;/td>
+                            &lt;/tr>)}
+                    &lt;/tbody>
+                &lt;/Table>
+
+                &lt;ButtonToolbar>
+                    &lt;Button variant='primary'
+                    onClick={()=>this.setState({addModalShow:true})}>
+                        Add Employee
+                    &lt;/Button>
+                    &lt;AddEmployee show={this.state.addModalShow}
+                    onHide={addModalClose}/>
+&lt;/ButtonToolbar>
+            &lt;/div>
+        )
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AddDepartment.html">AddDepartment</a></li><li><a href="AddEmployee.html">AddEmployee</a></li><li><a href="Department.html">Department</a></li><li><a href="EditDepartment.html">EditDepartment</a></li><li><a href="EditEmployee.html">EditEmployee</a></li><li><a href="Employee.html">Employee</a></li><li><a href="Home.html">Home</a></li><li><a href="Navigation.html">Navigation</a></li><li><a href="StickyHeader.html">StickyHeader</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Thu Dec 16 2021 01:06:15 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

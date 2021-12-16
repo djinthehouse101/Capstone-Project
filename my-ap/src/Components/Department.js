@@ -6,13 +6,22 @@ import {Button,ButtonToolbar} from 'react-bootstrap';
 import { AddDepartment } from './AddDepartment';
 import { EditDepartment } from './EditDepartment';
 
+/**
+ * This class is used to handle the creation of the Department page
+ */
 export class Department extends Component
 {
+    /**
+     * Used to construct the Department class.
+     * @param {*} props holds the database data.
+     */
     constructor(props){
         super(props);
         this.state={deps:[], addModalShow:false, editModalShow:false}
     }
-
+    /**
+    * This method is used to refresh the datbase and give it new information.
+    */
     refreshList(){
         fetch(process.env.REACT_APP_API+'department')
         .then(response=>response.json())
@@ -21,14 +30,24 @@ export class Department extends Component
         });
     }
 
+    /**
+     * Used to mount the data from refresh list.
+     */
     componentDidMount(){
         this.refreshList();
     }
 
+    /**
+     * Used to update the modal if the conent is updated.
+     */
     componentDidUpdate(){
         this.refreshList();
     }
 
+    /**
+     * Used to delete a department from the database.
+     * @param {int} depid holds the department id.
+     */
     deleteDep(depid)
     {
         if(window.confirm('Are you sure?'))
@@ -44,7 +63,10 @@ export class Department extends Component
     
         }
     }
-
+    /**
+     * Used to create the Department webpage.
+     * @returns the rendered department modal.
+     */
     render()
     {
         const {deps, depid, depname}=this.state;

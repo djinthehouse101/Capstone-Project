@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import {Modal,Button,Row,Col,Form, Image} from 'react-bootstrap'
 
+/**
+ * This class is used to handle the creation of the edit employee function.
+ */
 export class EditEmployee extends Component
 {
 
+    /**
+     * This constructor is used to set up the EditEmployee class.
+     * @param {*} props stores data
+     */
     constructor(props)
     {
         super(props);
@@ -12,14 +19,30 @@ export class EditEmployee extends Component
         this.handleFileSelected=this.handleFileSelected.bind(this);
     }
 
+    /**
+     * Used to set the base photo background.
+     * @type {string}
+     */
     photofilename = "anonymous.png";
+
+    /**
+     * Used to set the image name for the employee.
+     * @type {string}
+     */
     imagesrc = process.env.REACT_APP_PHOTOPATH+this.photofilename;
 
+    /**
+     * This method is used to mount the department to the employee.
+     */
     componentDidMount()
     {
         fetch(process.env.REACT_APP_API+'department').then(response=>response.json()).then(data=>{this.setState({deps:data});});
     }
 
+    /**
+     * This method is used to handle the employee being edited.
+     * @param {*} event holds query event taking place.
+     */
     handleSubmit(event){
         event.preventDefault();
         fetch(process.env.REACT_APP_API+'employee',
@@ -45,6 +68,10 @@ export class EditEmployee extends Component
         })
     }
 
+    /**
+     * This method is used to handle the file being selected for the employee background.
+     * @param {*} event holds query event taking place.
+     */
     handleFileSelected(event)
     {
         event.preventDefault();
@@ -66,6 +93,11 @@ export class EditEmployee extends Component
             alert('Failed');
         })
     }
+
+    /**
+     * Used to create the EditEmployee Modal.
+     * @returns The rendered EditEmployee features.
+     */
     render()
     {
         return (

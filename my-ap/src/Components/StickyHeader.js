@@ -1,19 +1,23 @@
 import React, { Component } from "react";
 
-export default class Sticky extends Component
+ /**
+  * Class to create StickyHeader 
+  */
+export class StickyHeader extends Component
 {
-  
-  //Try and get the sticky to work, if not you are allowed to make code that randomize the numbers for teh sticky headers.
-  //For context to buildertrend use the information from their website and talk about why they originally wanted the sticky header.
-  //The context of the app was to use it in development 
-  //Typedoc for react instead of doxygen
-  
+  /**
+   * Constructor used to set up the StickyHeader class
+   * @param {*} props 
+   */
   constructor(props)
   {
     super(props);
     this.state = { sticky: [], ART: 0, DatabaseCalls: 0, DatabaseTime: 0};
   }
   
+  /**
+   * This method is used to refresh the StickyHeader and give it new data
+   */
   refreshList()
   {
     const min = 1;
@@ -24,11 +28,18 @@ export default class Sticky extends Component
     this.setState({ ART: this.state.ART + randART, DatabaseCalls: this.state.DatabaseCalls + randDC, DatabaseTime: this.state.DatabaseTime + randDT} );
 }
 
+/**
+ * Used to mount the data from refresh list.
+ */
 componentDidMount()
 {
   this.refreshList();
 }
 
+/**
+ * Used to create the StickyHeader on the webpage
+ * @returns the rendered StickyHeader
+ */
   render()
   {
     return (

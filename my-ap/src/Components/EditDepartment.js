@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
 import {Modal,Button,Row,Col,Form} from 'react-bootstrap'
 
+/**
+ * This class is used to handle the the edit department function.
+ */
 export class EditDepartment extends Component
 {
 
+    /**
+     * Used to construct the EditDepartment class.
+     * @param {*} props holds the database data.
+     */
     constructor(props)
     {
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
     }
 
+    /**
+     * This method is used to handle the department being edited.
+     * @param {*} event holds query event taking place.
+     */
     handleSubmit(event){
         event.preventDefault();
         fetch(process.env.REACT_APP_API+'department',
@@ -34,6 +45,10 @@ export class EditDepartment extends Component
         })
     }
 
+    /**
+     * Used to create the EditDepartment Modal.
+     * @returns The rendered EditDepartment features.
+     */
     render()
     {
         return (

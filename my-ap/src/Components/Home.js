@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 
+/**
+ * This class is used to handle the creation of the Home page
+ */
 export class Home extends Component
 {
 
+    /**
+     * Used to create the home page.
+     * @returns the rendered home page.
+     */
     render()
     {
         return(

@@ -1,15 +1,25 @@
 import React, {Component} from 'react';
 import {Modal,Button,Row,Col,Form} from 'react-bootstrap'
 
+/**
+ * This class is used to handle the creation of the add to department element
+ */
 export class AddDepartment extends Component
 {
-
+    /**
+     * This constructor is used to set up the AddDepartment class
+     * @param {*} props 
+     */
     constructor(props)
     {
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
     }
 
+    /**
+     * This method is used to handle the new department being added.
+     * @param {*} event holds query event taking place.
+     */
     handleSubmit(event)
     {
         event.preventDefault();
@@ -32,6 +42,10 @@ export class AddDepartment extends Component
         })
     }
 
+    /**
+     * Used to create the AddDepartment Modal.
+     * @returns The rendered AddDepartment features.
+     */
     render()
     {
         return (

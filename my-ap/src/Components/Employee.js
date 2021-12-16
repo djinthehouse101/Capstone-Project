@@ -5,27 +5,46 @@ import {Button,ButtonToolbar} from 'react-bootstrap';
 import { AddEmployee } from './AddEmployee';
 import { EditEmployee } from './EditEmployee';
 
+/**
+ * This class is used to handle the creation of the Employee page
+ */
 export class Employee extends Component
 {
-
+    /**
+     * Used to construct the Employee class.
+     * @param {*} props holds the database data.
+     */
     constructor(props)
     {
         super(props);
         this.state={emps:[], addModalShow:false, editModalShow:false}
     }
 
+    /**
+    * This method is used to refresh the datbase and give it new data.
+    */
     refreshList(){
         fetch(process.env.REACT_APP_API+'employee').then(response=>response.json()).then(data=>{this.setState({emps:data});});
     }
 
+    /**
+     * Used to mount the data from refresh list.
+     */
     componentDidMount(){
         this.refreshList();
     }
 
+    /**
+     * Used to update the modal if the conent is updated.
+     */
     componentDidUpdate(){
         this.refreshList();
     }
 
+    /**
+     * Used to delete an employee from the database.
+     * @param {int} empid holds the employee id.
+     */
     deleteEmp(empid){
         if(window.confirm('Are you sure?')){
             fetch(process.env.REACT_APP_API+'employee/'+empid,
@@ -41,6 +60,10 @@ export class Employee extends Component
         }
     }
 
+    /**
+     * Used to create the Employee webpage.
+     * @returns the rendered employee modal.
+     */
     render()
     {
         const {emps, empid, empname, depmt, photofilename, doj}=this.state;

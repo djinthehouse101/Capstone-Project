@@ -2,9 +2,15 @@ import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 import {Navbar, Nav} from 'react-bootstrap';
 
+/**
+  * Class to create Navigation portion for the webpages. 
+  */
 export class Navigation extends Component
 {
-
+    /**
+     * Used to render the navigation bar to change wepages.
+     * @returns the rendered navigation bar.
+     */
     render()
     {
         return(
